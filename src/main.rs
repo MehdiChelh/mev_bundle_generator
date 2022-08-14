@@ -13,10 +13,11 @@ fn main() {
 
         process::exit(1)
     });
-    if let Err(e) = bundle_generator::run(&config) {
-        error!("Unhandled application error, panicking.");
-        panic!("{}", e);
+    bundle_generator::run(&config);
+    // if let Err(e) = bundle_generator::run(&config) {
+    //     error!("Unhandled application error, panicking.");
+    //     panic!("{}", e);
 
-        // Later, when there are handled cases: process::exit(2..n);
-    }
+    //     // Later, when there are handled cases: process::exit(2..n);
+    // }
 }

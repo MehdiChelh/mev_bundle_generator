@@ -1,5 +1,9 @@
 use std::convert::TryInto;
-
+/*
+Title: flashbots
+Description: Submit bundle of transactions (ie. constructing the web request and sending it).
+             Bundle struct with vector of utilities::transactions, hash (none initially) and block_number (set in crate::arbitrage)
+*/
 use anyhow::anyhow;
 use async_trait::async_trait;
 use log::{debug, error, warn};
@@ -134,30 +138,32 @@ impl Bundle {
             }
         }
         let send = match operation_mode {
-            OperationMode::Send => true,
-            OperationMode::Simulate => false,
+            // OperationMode::Send => true,
+            // OperationMode::Simulate => false,
+            OperationMode::Send => false,
+            OperationMode::Simulate => true,
         };
         // TODO(Support for a relay address as an argument)
         let fb_req = if std::ops::Not::not(send) {
-            debug!("Simulate Bundle");
-            // Generate request JSON
-            // TODO(Add support for optional parameters)
-            serde_json::json!({
-   "jsonrpc": "2.0",
-   "method": "eth_callBundle",
-   "params": [{"txs": raw_transactions, "blockNumber": BlockNumber::from(self.block + 1_u64), "stateBlockNumber": BlockNumber::from(self.block)}],
-   "id": 1}).to_string()
-        } else {
-            debug!("Send Bundle");
-            // Generate request JSON
-            // TODO(Add support for optional parameters)
-            serde_json::json!({
-       "jsonrpc": "2.0",
-       "method": "eth_sendBundle",
-       "params": [{"txs": raw_transactions, "blockNumber": BlockNumber::from(self.block + 1_u64)}],
-       "id": 1})
-            .to_string()
-        };
+                debug!("Simulate Bundle");
+                // Generate request JSON
+                // TODO(Add support for optional parameters)
+                serde_json::json!({
+                    "jsonrpc": "2.0",
+                    "method": "eth_callBundle",
+                    "params": [{"txs": raw_transactions, "blockNumber": BlockNumber::from(self.block + 1_u64), "stateBlockNumber": BlockNumber::from(self.block)}],
+                    "id": 1}).to_string()
+            } else {
+                debug!("Send Bundle");
+                // Generate request JSON
+                // TODO(Add support for optional parameters)
+                serde_json::json!({
+                    "jsonrpc": "2.0",
+                    "method": "eth_sendBundle",
+                    "params": [{"txs": raw_transactions, "blockNumber": BlockNumber::from(self.block + 1_u64)}],
+                    "id": 1})
+                .to_string()
+            };
         let fb_req_sig_header = format!(
             "{}:{}",
             &flashbots_signer.address(),

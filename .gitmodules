@@ -1,0 +1,3 @@
+[submodule "mev_bundle_generator"]
+	path = mev_bundle_generator
+	url = https://github.com/MehdiChelh/mev_bundle_generator

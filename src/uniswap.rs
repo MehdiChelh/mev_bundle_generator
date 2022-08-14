@@ -136,7 +136,7 @@ impl UniswapV2Pair {
             )
             .await
             .unwrap();
-
+            
         let _x: () = batch_pairs
             .into_par_iter()
             .map(|pair| {

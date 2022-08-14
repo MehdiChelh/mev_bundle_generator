@@ -1,5 +1,8 @@
 use std::fmt;
-
+/*
+Title : Arbitrage
+Description : file in charge of listing and building the bundles ( generate [(Market, ... ) -> Bundle] > evaluate_markets & take_crossed_market)
+*/
 use async_trait::async_trait;
 use log::{debug, info};
 use web3::contract::{Contract, Options};
@@ -221,7 +224,7 @@ impl CrossedMarketArbitrageEngine {
                 }
             }
         }
-        info!("Evaluating {} token pairs for arbitrage.", edges.len());
+        println!("Evaluating {} token pairs for arbitrage.", edges.len());
         let _x: () = edges
             .into_par_iter()
             .map(|edge| {

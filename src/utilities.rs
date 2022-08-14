@@ -1,5 +1,14 @@
 use std::fmt::Debug;
-
+/*
+Title: Utilities - Transaction Type, generate_contract_transaction -> return(TransactionParameters)
+Description:
+            Transaction {
+                raw_profit, taken_profit, delta_coinbase, estimated_gas,
+                parameters: TransactionParameters, signed: Option<SignedTransaction>
+            }
+            impl : sign
+}
+*/
 use bigdecimal::BigDecimal;
 use log::warn;
 use num_bigint::{BigInt, BigUint};
